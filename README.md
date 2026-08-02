@@ -24,6 +24,7 @@
    
 2. Paste this script into Termux to install:
 ```bash
+[ -e "~/storage" ] || termux-setup-storage && \
 apt-get update && \
 apt-get -y -o Dpkg::Options::="--force-confold" upgrade && \
 apt-get install -y x11-repo && \
