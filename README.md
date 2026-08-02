@@ -20,18 +20,9 @@
 > [!Note]
 > Be sure to install the F-Droid or Github version of Termux. The Google Play Store version is very old and will not work.
 
-1. `cd` to a directory you would like the script to download to.
-   
-2. Paste this script into Termux to install:
+Run this command to install:
 ```bash
-[ -e "~/storage" ] || termux-setup-storage && \
-apt-get update && \
-apt-get -y -o Dpkg::Options::="--force-confold" upgrade && \
-apt-get install -y x11-repo && \
-apt-get install -y ffmpeg kid3 && \
-curl -o flac2opus https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/flac2opus && \
-chmod +x flac2opus && \
-ln -sr ./flac2opus /data/data/com.termux/files/usr/bin/
+bash <(curl https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/termux-install.sh)
 ```
 Be patient, it's a lot to install.
 
