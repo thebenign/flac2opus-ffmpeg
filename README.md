@@ -27,9 +27,9 @@ Be patient, it's a lot to install.
 
 3. Download the Termux flac2opus script, make it executable, and sym link to system bin folder for convenience
 ```bash
-curl https://github.com/thebenign/flac2opus-ffmpeg/blob/main/flac2opus >> flac2opus && \
+curl -o flac2opus https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/flac2opus && \
 chmod +x flac2opus && \
-ln -s flac2opus /data/data/com.termux/files/use/bin/flac2opus
+ln -s ./flac2opus /data/data/com.termux/files/use/bin/
 ```
 ### Linux (Not Ready)
 > [!Warning]
@@ -44,8 +44,7 @@ ln -s flac2opus /data/data/com.termux/files/use/bin/flac2opus
 3. Download the Linux flac2opus script, make it executable, and sym link to system bin folder for convenience
 ```bash
 curl https://github.com/thebenign/flac2opus-ffmpeg/blob/main/flac2opus >> flac2opus && \
-chmod +x flac2opus && \
-ln -s flac2opus usr/local/bin/flac2opus
+chmod +x flac2opus
 ```
 
 ### Windows (Not Ready)
