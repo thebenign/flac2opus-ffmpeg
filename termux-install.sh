@@ -21,18 +21,16 @@ echo -e "\033[1;35m\n     Making install directory...\n"
 mkdir -p .local/bin
 cd .local/bin
 
-echo "     Downloading flac2opus into ~/.local/bin/ ...\n"
+echo -e "     Downloading flac2opus into ~/.local/bin/ ...\n"
 curl -s -o flac2opus https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/flac2opus
 # Make it executable
 chmod +x flac2opus
 
-echo "     Symlinking script to Termux's /usr/bin/...\n"
+echo -e "     Creating symbolic link in Termux's /usr/bin/...\n\n"
 cd $TERMUX__PREFIX/bin
 # Symlink script file to termux binary directory
-ln -s ${TERMUX__HOME}/.local/bin/flac2opus .
+ln -sf ${TERMUX__HOME}/.local/bin/flac2opus .
 cd $TERMUX__HOME
 
 echo -e "\033[1;32m   Installation complete!"
 echo -e "\033[0m   Run flac2opus inside any folder of flac files to start converting."
-
-https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/termux-install.sh
