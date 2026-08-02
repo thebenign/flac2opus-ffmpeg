@@ -1,6 +1,7 @@
+clear
 cd $TERMUX__HOME
 echo -e "\033[1;35m [[ Termux flac2opus install script ]]\n"
-echo "\033[0;37m     Checking shared storage..."
+echo -e "\033[0;37m     Checking shared storage..."
 if [ -e "~/storage" ]; then
     termux-setup-storage
     echo "       Setting up shared storage..."
@@ -8,15 +9,15 @@ else
     echo "       Already set up."
 fi
 
-echo -e "\033[1;35m\n     Updating packages...\n"
+echo -e "\033[1;35m\n     Updating packages...\n\033[2;37m"
 apt-get update
 apt-get -y -o Dpkg::Options::="--force-confold" -o Dpkg::Progress-Fancy=1 -o APT::Color=1 upgrade
 
-echo -e "\n     Installing dependencies...\n"
+echo -e "\033[1;35m\n     Installing dependencies...\n\033[2;37m"
 apt-get install -y x11-repo
 apt-get install -y -o Dpkg::Progress-Fancy=1 -o APT::Color=1 ffmpeg kid3
 
-echo "\n     Making install directory...\n"
+echo -e "\033[1;35m\n     Making install directory...\n"
 mkdir -p .local/bin
 cd .local/bin
 
