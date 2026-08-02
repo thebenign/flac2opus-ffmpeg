@@ -1,14 +1,15 @@
-# flac2opus-ffmpeg
-### A Termux-based batch audio file conversion script written in Bash.
-> Uses ffmpeg to batch convert Flac files into Opus [192kbps, vbr]
+# Termux flac2opus
+#### A Termux-based batch audio file conversion script written in Bash.
 
-> Preserves metadata
++ Uses ffmpeg to batch convert Flac files into Opus [192kbps, vbr]
 
-> Deletes ID3v1 tags (Illegal tag for Opus)
++ Preserves metadata
 
-> Preserves album art
++ Deletes ID3v1 tags (Illegal tag for Opus)
 
-> Embeds track art in Opus files
++ Preserves album art
+
++ Embeds track art in Opus files
 
 ## Dependencies
 + ffmpeg: For encoding audio via libopus and extracting image data.
