@@ -19,8 +19,10 @@
 ### Termux (Ready)
 1. Install dependencies
 ```bash
-pkg update && pkg upgrade && pkg install ffmpeg kid3
+pkg update && pkg upgrade && pkg install x11-repo && pkg install ffmpeg kid3
 ```
+Be patient, it's a lot to install.
+
 2. `cd` to or `mkdir` a suitable directory for the script.
 
 3. Download the Termux flac2opus script, make it executable, and sym link to system bin folder for convenience
