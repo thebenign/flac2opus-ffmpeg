@@ -1,0 +1,92 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# Flac to Opus batch converter.
+# Description: Converts all flac files in working directory into Opus files at 192kbps. Preserves album cover art file, track metadata, and track art embedding. Removes incompatible ID3v1 tags if present.
+# Usage: Run flac2opus from any directory containing flac files. New files will be output to the new sub-directory: ./Export
+
+# Set variables
+outdir="Export"
+success=0
+failed=0
+tmpcover="/data/data/com.termux/files/usr/tmp/flac2opus_cover.jpg"
+current_opus=""
+
+# Set interrupt trap. Interrupting with Ctrl+C will usually signal ffmpeg instead of the main script. Keep track of the working file in current_opus. If user cancels: trigger trap, remove the broken Opus file, exit clean (130)
+cleanup_interrupt() {
+    echo -e "${LIGHTRED}Interrupted by user, exiting."
+    rm -f "$tmpcover" "$current_opus"
+    exit 130
+}
+trap cleanup_interrupt INT
+
+# Colors
+NOCOLOR='\033[0m'
+LIGHTGRAY='\033[0;37m'
+LIGHTRED='\033[1;31m'
+LIGHTGREEN='\033[1;32m'
+LIGHTBLUE='\033[1;34m'
+LIGHTPURPLE='\033[1;35m'
+
+echo -e "${LIGHTPURPLE}\n  Starting Flac to Opus Batch Converter${NOCOLOR}\n"
+
+# Create Export directory and copy any JPEG album art images
+echo -e "${LIGHTGRAY}  Making export folder and copying album art...${LIGHTPURPLE}\n_______________________________\n${NOCOLOR}"
+mkdir -p "$outdir"
+find . -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec cp -f {} "$outdir/" \;
+
+# Main loop, iterate all flac files in directory
+for f in *.flac; do
+    # If no files, jump out of loop
+    [ -e "$f" ] || continue
+    
+    base=$(basename "$f" .flac)
+    echo -e "${LIGHTPURPLE}❯ Track: $f"
+    
+    # "Tag 1" (ID3v1 mp3) tags are incompatible with Opus, strip tags from source FLAC before conversion otherwise ffmpeg gets confused.
+    echo -e "${LIGHTGRAY}    Cleaning up tags..."
+    kid3-cli -c "tag 1 remove all" "$f" >/dev/null 2>&1
+
+    # Extract any embedded cover art from the FLAC and copy to temporary file
+    echo "    Extracting cover art..."
+    rm -f "$tmpcover"
+    ffmpeg -hide_banner -loglevel error -y -i "$f" -an -vcodec copy "$tmpcover" >/dev/null 2>&1
+
+    # Convert the flac file to opus, preserve metadata
+    echo "    Converting to Opus..."
+    current_opus="$outdir/${base}.opus"
+
+    if ffmpeg -hide_banner -loglevel warning -y \
+              -i "$f" \
+              -c:a libopus \
+              -b:a 192k \
+              -application audio \
+              -map_metadata 0 \
+              "$current_opus" 2>/dev/null; then
+
+        current_opus=""
+
+        # Embed the extracted cover art into the Opus file
+        if [ -s "$tmpcover" ]; then
+            echo "    Embedding cover art..."
+            kid3-cli -c "set picture:$tmpcover \"Cover Art\"" "$outdir/${base}.opus" >/dev/null 2>&1
+            rm -f "$tmpcover"
+        else
+            echo "    No cover art... Skipping"
+        fi
+
+        echo -e "${LIGHTGREEN}    Done${NOCOLOR}\n"
+        ((success++))
+    else
+        rm -f "$current_opus"
+        current_opus=""
+        rm -f "$tmpcover"
+        echo -e "${LIGHTRED}    Failed to convert${NOCOLOR}\n"
+        ((failed++))
+    fi
+done
+
+rm -f "$tmpcover"
+
+echo -e "${LIGHTPURPLE}_______________________________\n"
+echo -e "${LIGHTBLUE}  Export complete: $success files converted, $failed failed"
+echo -e "  Files output to ./Export${NOCOLOR}"
