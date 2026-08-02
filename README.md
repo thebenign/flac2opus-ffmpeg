@@ -29,7 +29,7 @@ Be patient, it's a lot to install.
 ```bash
 curl -o flac2opus https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/flac2opus && \
 chmod +x flac2opus && \
-ln -s ./flac2opus /data/data/com.termux/files/use/bin/
+ln -s ./flac2opus /data/data/com.termux/files/usr/bin/
 ```
 ### Linux (Not Ready)
 > [!Warning]
