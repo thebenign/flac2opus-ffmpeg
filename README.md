@@ -18,13 +18,13 @@
 ## Installation
 ### Termux (Ready)
 > [!Note]
-> Be sure to install the F-Droid or Github version of Termux. The Google Play Store version is very old and will not work.
+> Be sure to install Termux from F-Droid or Github. The Google Play Store version is very old and will not work. If you have this version, you must uninstall it and install the F-Droid or Github version.
 
 Run this command to install:
 ```bash
-bash <(curl https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/termux-install.sh)
+bash <(curl -s https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/termux-install.sh)
 ```
-Be patient, it's a lot to install.
+If you have not installed x11 packages before, installing dependencies can take some time. Please be patient.
 
 ### Linux (Not Ready)
 > [!Warning]
