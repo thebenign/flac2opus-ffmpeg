@@ -20,7 +20,7 @@
 > [!Note]
 > Be sure to install Termux from F-Droid or Github. The Google Play Store version is very old and will not work. If you have this version, you must uninstall it and install the F-Droid or Github version.
 
-Run this command to install:
+Copy and paste this command into Termux to install depencies and flac2opus:
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/termux-install.sh)
 ```
@@ -28,19 +28,11 @@ If you have not installed x11 packages before, installing dependencies can take 
 
 ### Linux (Not Ready)
 > [!Warning]
-> This install procedure will not work yet!
+> The install procedure will not work for Linux!
 > 
 > flac2opus was designed for Termux. With minor modifications it should run under any Linux which has ffmpeg and kid3 available.
 > 
 > I will upload a Linux script soon.
-
-1. Install dependencies: Using your package manager, install `ffmpeg` and `kid3`
-2. `cd` to or `mkdir` a suitable directory for the script.
-3. Download the Linux flac2opus script, make it executable, and sym link to system bin folder for convenience
-```bash
-curl -o flac2opus https://raw.githubusercontent.com/thebenign/termux-flac2opus/refs/heads/main/flac2opus && \
-chmod +x flac2opus
-```
 
 ### Windows (Not Ready)
 > [!Warning]
